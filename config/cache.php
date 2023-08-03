@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     /*
@@ -103,6 +105,6 @@ return [
     |
     */
 
-    'prefix' => env(key: 'CACHE_PREFIX', default: 'laravel_cache_'),
+    'prefix' => env(key: 'CACHE_PREFIX', default: 'template_cache_'),
 
 ];

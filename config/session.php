@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     /*
@@ -124,7 +126,7 @@ return [
     |
     */
 
-    'cookie' => env(key: 'SESSION_COOKIE', default: 'laravel_session'),
+    'cookie' => env(key: 'SESSION_COOKIE', default: 'template_session'),
 
     /*
     |--------------------------------------------------------------------------
