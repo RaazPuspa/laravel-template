@@ -1,0 +1,48 @@
+version: '3.1'
+services:
+    webserver:
+        image: raazpuspa/larasail:8.2
+        container_name: ${CONTAINER_PREFIX:-template}
+        ports:
+            - '${FORWARD_APP_PORT:-9000}:80'
+        environment:
+            LARAVEL_SAIL: 1
+            WWWUSER: '${WWWUSER:-1000}'
+        volumes:
+            - '.:/var/www/html'
+        networks:
+            - internal
+        depends_on:
+            - database
+            - email
+
+    database:
+        image: mysql:8.0.31
+        container_name: ${CONTAINER_PREFIX:-template}_database
+        ports:
+            - '${FORWARD_DB_PORT:-9001}:3306'
+        environment:
+            MYSQL_USER: '${DB_USERNAME:-template}'
+            MYSQL_PASSWORD: '${DB_PASSWORD:-template}'
+            MYSQL_DATABASE: '${DB_DATABASE:-template}'
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD:-template}'
+        volumes:
+            - database:/var/lib/mysql
+        networks:
+            - internal
+
+    email:
+        image: axllent/mailpit
+        container_name: ${CONTAINER_PREFIX:-template}_email
+        ports:
+            - '${FORWARD_MAIL_PORT:-9002}:8025'
+        networks:
+            - internal
+
+networks:
+    internal:
+        driver: bridge
+
+volumes:
+    database:
+        driver: local
